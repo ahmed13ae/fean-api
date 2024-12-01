@@ -1,0 +1,83 @@
+[
+    {
+      "name": "Introduction to Web Development",
+      "ratingsAverage": 4.5,
+      "ratingQuantity": 120,
+      "price": 49.99,
+      "contentText": "Learn the basics of HTML, CSS, and JavaScript.",
+      "image": "https://example.com/images/web-development.jpg"
+    },
+    {
+      "name": "Data Science Essentials",
+      "ratingsAverage": 4.7,
+      "ratingQuantity": 250,
+      "price": 79.99,
+      "contentText": "A comprehensive guide to data analysis and machine learning.",
+      "image": "https://example.com/images/data-science.jpg"
+    },
+    {
+      "name": "Mastering Python",
+      "ratingsAverage": 4.9,
+      "ratingQuantity": 300,
+      "price": 59.99,
+      "contentText": "Deep dive into Python programming for all levels.",
+      "image": "https://example.com/images/python.jpg"
+    },
+    {
+      "name": "Graphic Design for Beginners",
+      "ratingsAverage": 4.3,
+      "ratingQuantity": 85,
+      "price": 29.99,
+      "contentText": "Learn the fundamentals of design using popular tools like Photoshop.",
+      "image": "https://example.com/images/graphic-design.jpg"
+    },
+    {
+      "name": "Digital Marketing 101",
+      "ratingsAverage": 4.6,
+      "ratingQuantity": 150,
+      "price": 39.99,
+      "contentText": "Understand SEO, social media, and marketing strategies.",
+      "image": "https://example.com/images/digital-marketing.jpg"
+    },
+    {
+      "name": "Advanced Java Programming",
+      "ratingsAverage": 4.8,
+      "ratingQuantity": 200,
+      "price": 69.99,
+      "contentText": "Master Java for professional software development.",
+      "image": "https://example.com/images/java.jpg"
+    },
+    {
+      "name": "Photography Basics",
+      "ratingsAverage": 4.2,
+      "ratingQuantity": 70,
+      "price": 24.99,
+      "contentText": "Learn the art of capturing stunning photographs.",
+      "image": "https://example.com/images/photography.jpg"
+    },
+    {
+      "name": "Personal Finance and Investing",
+      "ratingsAverage": 4.5,
+      "ratingQuantity": 190,
+      "price": 34.99,
+      "contentText": "Manage your money and learn about smart investments.",
+      "image": "https://example.com/images/personal-finance.jpg"
+    },
+    {
+      "name": "The Complete Node.js Developer",
+      "ratingsAverage": 4.8,
+      "ratingQuantity": 270,
+      "price": 79.99,
+      "contentText": "Build scalable backend applications with Node.js.",
+      "image": "https://example.com/images/nodejs.jpg"
+    },
+    {
+      "name": "Fitness and Nutrition Guide",
+      "ratingsAverage": 4.4,
+      "ratingQuantity": 100,
+      "price": 19.99,
+      "contentText": "Achieve your health goals with the right exercise and diet.",
+      "image": "https://example.com/images/fitness.jpg"
+    }
+  ]
+  
