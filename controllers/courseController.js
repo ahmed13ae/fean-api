@@ -1,115 +1,101 @@
-const e = require('express');
-const Course=require('../models/courseModel');
+const e = require("express");
+const Course = require("../models/courseModel");
+const ApiFeatures = require("./../utils/apiFeatures");
+//erro handling
+const catchAsync=require('./../utils/asynError');
+const AppError=require('./../utils/appError')
 
 //find all---------------------
+
+
 exports.getAllCourses = async (req, res) => {
-  console.log('controller reached');
+  
   try {
-    // basic filtirng
-    const queryObj={...req.query}
-    const excludedFields=['page','sort','limit'];
-    excludedFields.forEach(el=>delete queryObj[el]);
-    // advanced filtring
-    let queryStr=JSON.stringify(queryObj);
-    queryStr=queryStr.replace(/\b(gte|gt|lte|lt)\b/g,match=>`$${match}`);
-    console.log(queryStr);
-   
-    let query=Course.find(JSON.parse(queryStr));
-    
+    let query=Course.find();
+    const features=new ApiFeatures(query,req.query).filter().sort().limitFields().paginate();
 
-    // Sorting note to sort desc for price for example use -price
-    //example of sort : ?sort=price => to sort price asc or use ?sort=price,rating to sort by primary price and secondary rating
-    if (req.query.sort) {
-      const sortBy=req.query.sort.split(',').join(' ');
-      query=query.sort(sortBy);
-    } else{
-      query=query.sort('-createdAt');
-    }
+    const courses = await features.dbQuery; // Fetch all courses from the database
 
-    const courses = await query; // Fetch all courses from the database
-    
     res.status(200).json({
-      status: 'success',
+      status: "success",
       results: courses.length,
+      page:features.page,
+      
       data: {
         courses,
       },
     });
   } catch (err) {
     res.status(500).json({
-      status: 'error',
-      message: 'Server error',
+      status: "error",
+      message: err.message,
     });
   }
-};    
+};
+
 //Create--------------------------
-exports.createCourse = async (req, res) => {
+exports.createCourse =catchAsync(async (req, res,next) => {
 
-    try {
-      const newCourse = await Course.create(req.body);
-      res.status(201).json({
-        status: 'success',
-        data: {
-          course: newCourse,
-        },
-      });
-    } catch (error) {
-      res.status(400).json({
-        status: 'fail',
-        message: error.message,
-      });
-    }
-  };
+  const newCourse = await Course.create(req.body);
+  res.status(201).json({
+    status: "success",
+    data: {
+      course: newCourse,
+    },
+  });
 
-  //find a single course
-  exports.getCourse=async(req,res)=>{
-    try {
-      const course=await Course.findById(req.params.id);
-      res.status(200).json({
-        status:'success',
-        data:{
-          course
-        }
-      });
-    } catch (error) {
-      res.status(500).json({
-        status:'error',
-        message:error
-      })
+}) 
+
+//find a single course
+exports.getCourse = catchAsync(async (req, res,next) => {
+  
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      next(new AppError('no course found with this id',404))
     }
-  }
-  //update -------------------
-  exports.updateCourse=async(req,res)=>{
-    try {
-      const updatedCourse=await Course.findByIdAndUpdate(req.params.id,req.body,{
-        new:true,
-        runValidators:true,
-      });
-      res.status(200).json({
-        status:'success',
-        data:{
-          updatedCourse
-        }
-      })
-    } catch (error) {
-      res.status(500).json({
-        status:'error',
-        message:error
-      })
+    res.status(200).json({
+      status: "success",
+      data: {
+        course,
+      },
+    });
+  
+});
+//update -------------------
+exports.updateCourse = catchAsync(async (req, res,next) => {
+  
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!updatedCourse) {
+      next(new AppError('no course found with this id',404))
     }
-  }
-  //delete ------------------
-  exports.deleteCourse=async(req,res)=>{
-    try {
-      await Course.findByIdAndDelete(req.params.id)
-      res.status(200).json({
-        status:'success',
-        message:'course deleted',
-      })
-    } catch (error) {
-      res.status(500).json({
-        status:'error',
-        message:error
-      })
+    res.status(200).json({
+      status: "success",
+      data: {
+        updatedCourse,
+      },
+    });
+  
+});
+//delete ------------------
+exports.deleteCourse = catchAsync(async (req, res) => {
+  
+  const deletedCourse=  await Course.findByIdAndDelete(req.params.id);
+    if (!deletedCourse) {
+      next(new AppError('no course found with this id',404))
     }
-  }
+    
+    res.status(200).json({
+      status: "success",
+      message: "course deleted",
+    });
+ 
+   
+  
+});
