@@ -1,0 +1,15 @@
+{
+    "name": "ahmed/fean-api",
+    "autoload": {
+        "psr-4": {
+            "Ahmed\\FeanApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ahmed El-Gohary",
+            "email": "133617423+ahmed13ae@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
